@@ -1,0 +1,1 @@
+import{r as s,o as a,c as o,t as p,a as t}from"./vendor.cabade39.js";const e={props:{msg:String},setup:t=>(s({count:0}),(s,e)=>(a(),o("h1",null,p(t.msg),1))),__scopeId:"data-v-fad681f2"};t({setup:s=>(s,p)=>(a(),o(e,{msg:"棋譜・Keipou"}))}).mount("#app");
