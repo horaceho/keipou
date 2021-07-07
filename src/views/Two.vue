@@ -9,10 +9,10 @@
 <script>
 export default {
   mounted() {
-    console.log("one mounted()");
+    console.log("two mounted()");
   },
   unmounted() {
-    console.log("one unmounted()");
+    console.log("two unmounted()");
   },
 };
 </script>
