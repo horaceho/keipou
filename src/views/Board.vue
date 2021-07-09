@@ -1,7 +1,7 @@
 <template>
-  <div class="grid grid-cols-9 gap-x-0">
+  <div class="grid grid-cols-9 mx-auto m-5 w-72 h-80">
     <div v-for="grid in grids">
-      <div >
+      <div class="w-8">
         <Piece :grid="grid" />
       </div>
     </div>
