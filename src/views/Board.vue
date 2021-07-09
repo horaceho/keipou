@@ -1,7 +1,7 @@
 <template>
-  <div class="m-2 flex">
+  <div class="grid grid-cols-9 gap-x-0">
     <div v-for="grid in grids">
-      <div class="w-8">
+      <div >
         <Piece :grid="grid" />
       </div>
     </div>
@@ -16,14 +16,7 @@ export default {
     Piece,
   },
   props: {
-    fen: { type: String, default: "abcdef" },
-  },
-  methods: {
-    fenToGrids() {},
-  },
-  data() {
-    return {
-    };
+    fen: { type: String, default: "rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RN2K2NR r - - 0 1" },
   },
   mounted() {
     console.log("board mounted()");
@@ -32,67 +25,58 @@ export default {
     console.log("board unmounted()");
   },
   setup(props) {
-    let grids = [
-      {
-        name: "兵",
-        side: "red",
-      },
-      {
-        name: "炮",
-        side: "red",
-      },
-      {
-        name: "車",
-        side: "red",
-      },
-      {
-        name: "馬",
-        side: "red",
-      },
-      {
-        name: "相",
-        side: "red",
-      },
-      {
-        name: "士",
-        side: "red",
-      },
-      {
-        name: "帥",
-        side: "red",
-      },
-      {
-        name: "將",
-        side: "black",
-      },
-      {
-        name: "仕",
-        side: "black",
-      },
-      {
-        name: "象",
-        side: "black",
-      },
-      {
-        name: "馬",
-        side: "black",
-      },
-      {
-        name: "車",
-        side: "black",
-      },
-      {
-        name: "砲",
-        side: "black",
-      },
-      {
-        name: "卒",
-        side: "black",
-      },
-    ];
-    length = props.fen.length;
+    const Pieces = {
+      r: "車",
+      n: "馬", h: "馬",
+      b: "象", e: "象",
+      a: "士",
+      k: "將",
+      c: "砲",
+      p: "卒",
+      R: "車",
+      N: "馬", H: "馬",
+      B: "相", E: "相",
+      A: "仕",
+      K: "帥",
+      C: "炮",
+      P: "兵",
+    };
+
+    function fenToGrids(fen) {
+      let parts = fen.split(" ");
+      let grids = [];
+      if (parts.length > 0) {
+        let lines = parts[0].split("/");
+        if (lines.length === 10) {
+          for (let line of lines) {
+            let chars = line.split("");
+            for (let one of chars) {
+              if (one.match(/\d/)) {
+                for (let i = 0; i < Number(one); i++) {
+                  grids.push({
+                    name: ".",
+                    side: "none",
+                  });
+                }
+              } else {
+                let side = "none";
+                if (one === one.toUpperCase()) { side = "red"; }
+                if (one === one.toLowerCase()) { side = "black"; }
+                grids.push({
+                  name: Pieces[one],
+                  side: side,
+                });
+              }
+            }
+          }
+        }
+      }
+      return grids;
+    };
+
+    let grids = fenToGrids(props.fen);
+
     return {
-      length,
       grids,
     };
   },
