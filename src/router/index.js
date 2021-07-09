@@ -4,6 +4,7 @@ import One from "../views/One.vue";
 import Two from "../views/Two.vue";
 import Pous from "../views/Pous.vue";
 import Rows from "../views/Rows.vue";
+import Svgs from "../views/Svgs.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/rows",
     name: "Rows",
     component: Rows,
+  },
+  {
+    path: "/svgs",
+    name: "Svgs",
+    component: Svgs,
   },
 ];
 
