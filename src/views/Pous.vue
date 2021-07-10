@@ -12,7 +12,7 @@
             <span class="ml-2">{{ item.name }}</span>
           </a>
         </div>
-    </div>
+      </div>
     </li>
   </ul>
 </template>
