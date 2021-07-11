@@ -2,7 +2,7 @@
   <div class="grid grid-cols-9 mx-auto m-5 w-72 h-80 bg-board bg-no-repeat">
     <div v-for="grid in grids">
       <div class="w-8">
-        <Piece :grid="grid" />
+        <Piece :grid="grid" @onTapped="onTapped" />
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
     console.log("board unmounted()");
   },
   setup(props) {
-    const Pieces = {
+    const Names = {
       r: "車",
       n: "馬", h: "馬",
       b: "象", e: "象",
@@ -42,6 +42,10 @@ export default {
       P: "兵",
     };
 
+    function onTapped(index) {
+      console.log(index);
+    }
+
     function fenToGrids(fen) {
       let parts = fen.split(" ");
       let grids = [];
@@ -54,6 +58,7 @@ export default {
               if (one.match(/\d/)) {
                 for (let i = 0; i < Number(one); i++) {
                   grids.push({
+                    index: grids.length,
                     name: ".",
                     side: "none",
                   });
@@ -63,7 +68,8 @@ export default {
                 if (one === one.toUpperCase()) { side = "red"; }
                 if (one === one.toLowerCase()) { side = "black"; }
                 grids.push({
-                  name: Pieces[one],
+                  index: grids.length,
+                  name: Names[one],
                   side: side,
                 });
               }
@@ -78,6 +84,7 @@ export default {
 
     return {
       grids,
+      onTapped,
     };
   },
 };
