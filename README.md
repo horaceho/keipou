@@ -2,7 +2,7 @@
 
 ### Homepage
 
-Open [https://yaumati.github.io/keipou/](https://yaumati.github.io/keipou/)
+Open [https://yaumati.github.io/keipou/#/games](https://yaumati.github.io/keipou/#/games)
 
 ### Development
 ```
