@@ -1,16 +1,18 @@
 <template>
-  <div class="flex">
-    <div class="flex-auto m-5">
-      <div class="grid grid-cols-1 place-items-end">
-        <div v-for="grid in headBox" :key="grid.index">
-          <div class="w-8">
-            <Piece :grid="grid" @onTapped="onHeadBoxTapped" />
+  <div class="flex mt-2">
+    <div class="flex-auto m-2" v-on:click.self="onBoxTapped">
+      <div v-if="mode === 'edit'">
+        <div class="grid grid-cols-1 place-items-end">
+          <div v-for="grid in headBox" :key="grid.index">
+            <div class="w-8">
+              <Piece :grid="grid" @onTapped="onHeadBoxTapped" />
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <div class="grid grid-cols-9 mx-auto m-5 w-72 h-80 bg-board bg-no-repeat">
+      <div class="grid grid-cols-9 mx-auto m-2 w-72 h-80 bg-board bg-no-repeat">
         <div v-for="grid in grids" :key="grid.index">
           <div class="w-8">
             <Piece :grid="grid" @onTapped="onPieceTapped" />
@@ -18,20 +20,22 @@
         </div>
       </div>
     </div>
-    <div class="flex-auto m-5">
-      <div class="grid grid-cols-1 place-items-start">
-        <div v-for="grid in tailBox" :key="grid.index">
-          <div class="w-8">
-            <Piece :grid="grid" @onTapped="onTailBoxTapped" />
+    <div class="flex-auto m-2 pt-16" v-on:click.self="onBoxTapped">
+      <div v-if="mode === 'edit'">
+        <div class="grid grid-cols-1">
+          <div v-for="grid in tailBox" :key="grid.index">
+            <div class="w-8">
+              <Piece :grid="grid" @onTapped="onTailBoxTapped" />
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div v-if="mode === 'play'">
+  <div v-if="false && mode === 'play'">
     <Float :icons="playIcons" @onTapped="onFloatTapped" />
   </div>
-  <div v-if="mode === 'edit'">
+  <div v-if="false && mode === 'edit'">
     <Float :icons="editIcons" @onTapped="onFloatTapped" />
   </div>
 </template>
@@ -86,6 +90,7 @@ export default {
   },
   methods: {
     onPieceTapped(event) {
+      console.log("onPieceTapped");
       if (this.grids[event.index].tapped) {
         this.grids[event.index].tapped = false;
         let position = this.taps.indexOf(event.index);
@@ -104,18 +109,24 @@ export default {
         }
         this.clearTaps();
       }
-
-      // if (this.mode === "idle") {
-      //   this.mode = "play";
-      // }
+    },
+    onBoxTapped() {
+      console.log("onBoxTapped");
+      if (this.mode !== "edit") {
+        this.mode = "edit";
+      } else {
+        this.mode = "play";
+      }
     },
     onHeadBoxTapped(event) {
-      if (event.index < 7) {
+      console.log("onHeadBoxTapped");
+      if (this.headBox[event.index].code !== "1") {
         this.headBox[event.index].tapped = this.headBox[event.index].tapped ? false : true;
       }
     },
     onTailBoxTapped(event) {
-      if (event.index > 2) {
+      console.log("onHeadBoxTapped");
+      if (this.tailBox[event.index].code !== "1") {
         this.tailBox[event.index].tapped = this.tailBox[event.index].tapped ? false : true;
       }
     },
@@ -211,8 +222,8 @@ export default {
   },
   mounted() {
     this.grids = this.fenToGrids(this.fen);
-    this.headBox = this.strToBox("krncabp3");
-    this.tailBox = this.strToBox("3PBACNRK");
+    this.headBox = this.strToBox("krncabpx");
+    this.tailBox = this.strToBox("XPBACNRK");
     this.mode = this.init; // null, idle
     console.log("board mounted()");
   },

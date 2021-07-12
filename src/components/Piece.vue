@@ -37,6 +37,7 @@ const Names = {
   k: "將",
   c: "砲",
   p: "卒",
+  x: "Ｘ",
   R: "車",
   N: "馬", H: "馬",
   B: "相", E: "相",
@@ -44,6 +45,7 @@ const Names = {
   K: "帥",
   C: "炮",
   P: "兵",
+  X: "Ｘ",
 };
 
 export default {
@@ -58,9 +60,9 @@ export default {
       return Names[this.grid.code] ?? Space;
     },
     side() {
-      if ("RNHBEAKCP".indexOf(this.grid.code) > -1) {
+      if ("RNHBEAKCPX".indexOf(this.grid.code) > -1) {
         return "red";
-      } else if ("rnhbeakcp".indexOf(this.grid.code) > -1) {
+      } else if ("rnhbeakcpx".indexOf(this.grid.code) > -1) {
         return "black";
       } else {
         return "none";
