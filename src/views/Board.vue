@@ -89,29 +89,47 @@ export default {
     },
   },
   methods: {
-    onPieceTapped(event) {
-      console.log("onPieceTapped");
-      if (this.grids[event.index].tapped) {
-        this.grids[event.index].tapped = false;
-        let position = this.taps.indexOf(event.index);
-        if (position > -1) {
-          this.taps.splice(position, 1);
+    pushTap(piece) {
+      if (this.taps.length > 0) {
+        if (piece.type === "grid" && piece.type === this.taps[0].type) {
+          if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0].index].code) > -1) {
+            this.grids[piece.index].code = this.taps[0].code;
+            this.grids[this.taps[0].index].code = "1";
+          }
+          this.clearTaps();
+        } else {
+          if (piece.type === "grid") {
+            if ("rnhbeakcpRNHBEAKCP".indexOf(this.taps[0].code) > -1) {
+              this.grids[piece.index].code = this.taps[0].code;
+              this.grids[piece.index].tapped = false;
+            } else if ("xX1".indexOf(this.taps[0].code) > -1) {
+              this.grids[piece.index].code = "1";
+              this.grids[piece.index].tapped = false;
+            } else {
+              this.clearTaps();
+            }
+          } else {
+            this.clearTaps();
+          }
         }
       } else {
-        this.grids[event.index].tapped = true;
-        this.taps.push(event.index);
+        this.taps.push(piece);
       }
-
-      if (this.taps.length === 2) {
-        if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0]].code) > -1) {
-          this.grids[this.taps[1]].code = this.grids[this.taps[0]].code;
-          this.grids[this.taps[0]].code = "1";
-        }
+    },
+    onPieceTapped(event) {
+      if (this.grids[event.index].tapped) {
+        this.grids[event.index].tapped = false;
         this.clearTaps();
+      } else {
+        this.grids[event.index].tapped = true;
+        this.pushTap({
+          type: "grid",
+          index: event.index,
+          code: this.grids[event.index].code,
+        });
       }
     },
     onBoxTapped() {
-      console.log("onBoxTapped");
       if (this.mode !== "edit") {
         this.mode = "edit";
       } else {
@@ -119,15 +137,33 @@ export default {
       }
     },
     onHeadBoxTapped(event) {
-      console.log("onHeadBoxTapped");
       if (this.headBox[event.index].code !== "1") {
-        this.headBox[event.index].tapped = this.headBox[event.index].tapped ? false : true;
+        if (this.headBox[event.index].tapped) {
+          this.headBox[event.index].tapped = false;
+          this.clearTaps();
+        } else {
+          this.headBox[event.index].tapped = true;
+          this.pushTap({
+            type: "head",
+            index: event.index,
+            code: this.headBox[event.index].code,
+          });
+        }
       }
     },
     onTailBoxTapped(event) {
-      console.log("onHeadBoxTapped");
       if (this.tailBox[event.index].code !== "1") {
-        this.tailBox[event.index].tapped = this.tailBox[event.index].tapped ? false : true;
+        if (this.tailBox[event.index].tapped) {
+          this.tailBox[event.index].tapped = false;
+          this.clearTaps();
+        } else {
+          this.tailBox[event.index].tapped = true;
+          this.pushTap({
+            type: "tail",
+            index: event.index,
+            code: this.tailBox[event.index].code,
+          });
+        }
       }
     },
     onFloatTapped(event) {
@@ -148,6 +184,12 @@ export default {
     },
     clearTaps() {
       this.grids.forEach(function(grid) {
+        grid.tapped = false;
+      });
+      this.headBox.forEach(function(grid) {
+        grid.tapped = false;
+      });
+      this.tailBox.forEach(function(grid) {
         grid.tapped = false;
       });
       this.taps = [];
