@@ -1,8 +1,14 @@
 <template>
   <div class="absolute bottom-0 right-0"> <!-- rounded-md bg-gray-100 shadow-md -->
-    <div v-for="icon in this.icons" :key="icon.code">
+    <div v-for="(icon, index) in this.icons" :key="index">
       <div class="h-16 w-16 flex justify-center items-center filter drop-shadow">
-        <button class="text-gray-500 hover:text-black text-3xl text-center" v-on:click="onTapped(index)"> {{ icon.name }} </button>
+        <button
+          class="text-gray-500 hover:text-black text-2xl text-center"
+          v-on:click="onTapped(index)"
+          v-on:dblclick="onTapTap(index)"
+        >
+          {{ icon.name }}
+        </button>
       </div>
     </div>
   </div>
@@ -20,13 +26,19 @@ export default {
     icons: Object, // e.g.: { code: "undo", name: "↺" }
   },
   emits: [
-    "onTapped"
+    "onTapped",
+    "onTapTap",
   ],
   methods: {
     onTapped(at) {
       this.$emit("onTapped", {
         icon: this.icons[at],
-    });
+      });
+    },
+    onTapTap(at) {
+      this.$emit("onTapTap", {
+        icon: this.icons[at],
+      });
     },
   },
 };
