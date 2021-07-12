@@ -32,4 +32,42 @@
       </div>
     </div>
   </div>
+  <Float :icons="icons" @onTapped="onTapped" />
 </template>
+
+<script>
+import Float from '../components/Float.vue'
+
+export default {
+  components: {
+    Float,
+  },
+  methods: {
+    onTapped(event) {
+      console.log('tapped', event.icon.code);
+    },
+  },
+  data() {
+    return {
+      icons: [
+        {
+          name: "↺",
+          code: "undo",
+        },
+        {
+          name: "◁",
+          code: "back",
+        },
+        {
+          name: "▶",
+          code: "next",
+        },
+        {
+          name: "⌂",
+          code: "home",
+        },
+      ],
+    };
+  },
+}
+</script>
