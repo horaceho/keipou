@@ -1,7 +1,7 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue";
+import Game from "../views/Game.vue";
 import Games from "../views/Games.vue";
-import Board from "../views/Board.vue";
 import One from "../views/One.vue";
 import Two from "../views/Two.vue";
 import Pous from "../views/Pous.vue";
@@ -15,9 +15,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/board",
-    name: "Board",
-    component: Board,
+    path: "/game",
+    name: "Game",
+    component: Game,
   },
   {
     path: "/games",

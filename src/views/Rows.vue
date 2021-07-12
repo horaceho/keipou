@@ -11,7 +11,7 @@
               <h2 class="sr-only" id="section-1-title">Section title</h2>
               <div class="rounded-lg bg-white overflow-hidden shadow">
                 <div class="p-6">
-                  12345
+                  {{ single.code }}
                 </div>
               </div>
             </section>
@@ -23,7 +23,7 @@
               <h2 class="sr-only" id="section-2-title">Section title</h2>
               <div class="rounded-lg bg-white overflow-hidden shadow">
                 <div class="p-6">
-                  ABCDE
+                  {{ double.code }}
                 </div>
               </div>
             </section>
@@ -32,4 +32,53 @@
       </div>
     </div>
   </div>
+  <Float :icons="icons" @onTapped="onTapped" @onTapTap="onTapTap"/>
 </template>
+
+<script>
+import Float from '../components/Float.vue'
+
+export default {
+  components: {
+    Float,
+  },
+  methods: {
+    onTapped(event) {
+      this.single.code = event.icon.code;
+      console.log('single', event.icon);
+    },
+    onTapTap(event) {
+      this.double.code = event.icon.code;
+      console.log('double', event.icon);
+    },
+  },
+  data() {
+    return {
+      single: {
+        code: "Hello",
+      },
+      double: {
+        code: "World",
+      },
+      icons: [
+        {
+          name: "↺",
+          code: "undo",
+        },
+        {
+          name: "◁",
+          code: "back",
+        },
+        {
+          name: "▶",
+          code: "next",
+        },
+        {
+          name: "⌂",
+          code: "home",
+        },
+      ],
+    };
+  },
+}
+</script>
