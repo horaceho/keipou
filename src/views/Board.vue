@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-9 mx-auto m-5 w-72 h-80 bg-board bg-no-repeat">
+  <div class="grid grid-cols-9 mx-auto m-5 w-72 h-80 bg-board bg-no-repeat bg-yellow-100">
     <div v-for="grid in grids" :key="grid.index">
       <div class="w-8">
         <Piece :grid="grid" @onTapped="onTapped" />
@@ -10,25 +10,6 @@
 
 <script>
 import Piece from "../components/Piece.vue";
-
-const Undef = -1;
-const Space = "　"; // full-width space
-const Names = {
-  r: "車",
-  n: "馬", h: "馬",
-  b: "象", e: "象",
-  a: "士",
-  k: "將",
-  c: "砲",
-  p: "卒",
-  R: "車",
-  N: "馬", H: "馬",
-  B: "相", E: "相",
-  A: "仕",
-  K: "帥",
-  C: "炮",
-  P: "兵",
-};
 
 export default {
   components: {
@@ -48,19 +29,18 @@ export default {
       }
 
       if (this.taps.length === 2) {
-        if (this.grids[this.taps[0]].side !== "none") {
+        if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0]].code) > -1) {
           this.grids[this.taps[1]].code = this.grids[this.taps[0]].code;
-          this.grids[this.taps[1]].name = this.grids[this.taps[0]].name;
-          this.grids[this.taps[1]].side = this.grids[this.taps[0]].side;
-          this.grids[this.taps[0]].code = ".";
-          this.grids[this.taps[0]].name = Space;
-          this.grids[this.taps[0]].side = "none";
+          this.grids[this.taps[0]].code = "1";
         }
-        this.grids.forEach(function(grid) {
-          grid.tapped = false;
-        });
-        this.taps = [];
+        this.clearTaps();
       }
+    },
+    clearTaps() {
+      this.grids.forEach(function(grid) {
+        grid.tapped = false;
+      });
+      this.taps = [];
     },
     fenToGrids(fen) {
       let parts = fen.split(" ");
@@ -75,19 +55,14 @@ export default {
                 for (let i = 0; i < Number(one); i++) {
                   grids.push({
                     index: grids.length,
-                    code: ".",
-                    name: Space,
-                    side: "none",
+                    code: "1",
                     tapped: false,
                   });
                 }
               } else {
-                let side = (one === one.toUpperCase()) ? "red" : "black";
                 grids.push({
                   index: grids.length,
                   code: one,
-                  name: Names[one],
-                  side: side,
                   tapped: false,
                 });
               }
@@ -104,6 +79,8 @@ export default {
   data() {
     return {
       grids: [],
+      turn: "red",
+      move: 0,
       taps: [],
     };
   },
