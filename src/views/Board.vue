@@ -10,6 +10,9 @@
           </div>
         </div>
       </div>
+      <div v-else class="pt-72">
+        <Menus names="⋯" @onTapped="onMenuItemTapped" class="place-items-end" />
+      </div>
     </div>
     <div>
       <div class="grid grid-cols-9 mx-auto m-2 w-72 h-80 bg-board bg-no-repeat">
@@ -20,8 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="flex-auto m-2 pt-16" v-on:click.self="onBoxTapped">
-      <div v-if="mode === 'edit'">
+    <div class="flex-auto m-2" v-on:click.self="onBoxTapped">
+      <div v-if="mode === 'edit'" class="pt-16">
         <div class="grid grid-cols-1">
           <div v-for="grid in tailBox" :key="grid.index">
             <div class="w-8">
@@ -29,6 +32,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <Menus names="　" @onTapped="onMenuItemTapped" />
       </div>
     </div>
   </div>
@@ -41,6 +47,7 @@
 </template>
 
 <script>
+import Menus from '../components/Menus.vue';
 import Piece from "../components/Piece.vue";
 import Float from '../components/Float.vue'
 
@@ -77,6 +84,7 @@ const Icons = {
 
 export default {
   components: {
+    Menus,
     Piece,
     Float,
   },
@@ -180,6 +188,13 @@ export default {
           break;
         case "home":
           break;
+      }
+    },
+    onMenuItemTapped(event) {
+      if (this.mode !== "edit") {
+        this.mode = "edit";
+      } else {
+        this.mode = "play";
       }
     },
     clearTaps() {
