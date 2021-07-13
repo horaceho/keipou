@@ -292,10 +292,8 @@ export default {
     this.headBox = this.strToBox("krncabpx");
     this.tailBox = this.strToBox("XPBACNRK");
     this.mode = this.init; // null, idle
-    console.log("board mounted()");
   },
   unmounted() {
-    console.log("board unmounted()");
   },
 };
 </script>

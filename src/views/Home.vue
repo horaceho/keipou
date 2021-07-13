@@ -9,10 +9,8 @@
 <script>
 export default {
   mounted() {
-    console.log("home mounted()");
   },
   unmounted() {
-    console.log("home unmounted()");
   },
 };
 </script>

@@ -32,17 +32,14 @@ export default {
     };
   },
   mounted() {
-    console.log("pous mounted()");
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         this.data = data;
-        console.log(data);
       })
       .catch((error) => console.error(error));
   },
   unmounted() {
-    console.log("pous unmounted()");
   },
 };
 </script>
