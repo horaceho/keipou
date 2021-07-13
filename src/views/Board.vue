@@ -97,31 +97,41 @@ export default {
     },
   },
   methods: {
-    pushTap(piece) {
+    pushTap(event) {
       if (this.taps.length > 0) {
-        if (piece.type === "grid" && piece.type === this.taps[0].type) {
+        if (event.type === "grid" && event.type === this.taps[0].type) {
           if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0].index].code) > -1) {
-            this.grids[piece.index].code = this.taps[0].code;
+            this.grids[event.index].code = this.taps[0].code;
             this.grids[this.taps[0].index].code = "1";
           }
           this.clearTaps();
         } else {
-          if (piece.type === "grid") {
+          if (event.type === "grid") {
             if ("rnhbeakcpRNHBEAKCP".indexOf(this.taps[0].code) > -1) {
-              this.grids[piece.index].code = this.taps[0].code;
-              this.grids[piece.index].tapped = false;
+              this.grids[event.index].code = this.taps[0].code;
+              this.grids[event.index].tapped = false;
             } else if ("xX1".indexOf(this.taps[0].code) > -1) {
-              this.grids[piece.index].code = "1";
-              this.grids[piece.index].tapped = false;
+              this.grids[event.index].code = "1";
+              this.grids[event.index].tapped = false;
             } else {
               this.clearTaps();
             }
           } else {
             this.clearTaps();
+            switch (event.type) {
+              case "head":
+                this.headBox[event.index].tapped = true;
+                this.taps.push(event);
+                break;
+              case "tail":
+                this.tailBox[event.index].tapped = true;
+                this.taps.push(event);
+                break;
+            };
           }
         }
       } else {
-        this.taps.push(piece);
+        this.taps.push(event);
       }
     },
     onPieceTapped(event) {

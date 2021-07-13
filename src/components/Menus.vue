@@ -20,7 +20,6 @@ export default {
       this.$emit("onTapped", {
         index: index,
       });
-      console.log("onMenuItemTapped", index);
     },
     strToMenus(str) {
       let items = [];
@@ -46,9 +45,7 @@ export default {
     };
   },
   mounted() {
-    console.log("menus", this.names);
     this.items = this.strToMenus(this.names);
-    console.log("menus", this.names, this.items);
   },
 };
 </script>
