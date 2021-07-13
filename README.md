@@ -1,10 +1,10 @@
 # Keipou・棋譜
 
-### Homepage
+### To run
 
 Open [https://yaumati.github.io/keipou/#/games](https://yaumati.github.io/keipou/#/games)
 
-### Development
+### To clone
 ```
 git clone git@github.com:yaumati/keipou.git keipou
 cd keipou
