@@ -17,10 +17,8 @@ export default {
     msg: String,
   },
   mounted() {
-    console.log("hello mounted()");
   },
   unmounted() {
-    console.log("hello unmounted()");
   },
   setup(props) {
     const state = reactive({ count: 0 });

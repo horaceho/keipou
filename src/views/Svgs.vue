@@ -34,10 +34,8 @@
 <script>
 export default {
   mounted() {
-    console.log("svgs mounted()");
   },
   unmounted() {
-    console.log("svgs unmounted()");
   },
 };
 </script>
