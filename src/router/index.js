@@ -19,6 +19,7 @@ const routes = [
     path: "/game",
     name: "Game",
     component: Game,
+    props: route => ({ fen: route.query.fen }),
   },
   {
     path: "/games",
