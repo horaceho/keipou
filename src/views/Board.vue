@@ -1,39 +1,39 @@
 <template>
   <div class="flex mt-2">
-    <div class="flex-auto m-2" v-on:click.self="onBoxTapped">
+    <div class="flex-auto m-2" v-on:click="onBoxTapped">
       <div v-if="mode === 'edit'">
         <div class="grid grid-cols-1 place-items-end">
           <div v-for="grid in headBox" :key="grid.index">
-            <div class="w-8">
+            <div class="w-8 md:w-16 xl:w-24">
               <Piece :grid="grid" @onTapped="onHeadBoxTapped" />
             </div>
           </div>
         </div>
       </div>
-      <div v-else class="pt-72">
+      <div v-else class="min-h-full">
         <Menus names="⋯" @onTapped="onMenuItemTapped" class="place-items-end" />
       </div>
     </div>
     <div>
-      <div class="grid grid-cols-9 mx-auto m-2 w-72 h-80 bg-board bg-no-repeat">
+      <div class="grid grid-cols-9 mx-auto m-2 bg-board bg-no-repeat">
         <div v-for="grid in grids" :key="grid.index">
-          <div class="w-8">
+          <div class="w-8 md:w-16 xl:w-24">
             <Piece :grid="grid" @onTapped="onPieceTapped" />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex-auto m-2" v-on:click.self="onBoxTapped">
-      <div v-if="mode === 'edit'" class="pt-16">
+    <div class="flex-auto m-2" v-on:click="onBoxTapped">
+      <div v-if="mode === 'edit'" class="pt-16 md:pt-32 xl:pt-48">
         <div class="grid grid-cols-1">
           <div v-for="grid in tailBox" :key="grid.index">
-            <div class="w-8">
+            <div class="w-8 md:w-16 xl:w-24">
               <Piece :grid="grid" @onTapped="onTailBoxTapped" />
             </div>
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="min-h-full">
         <Menus names="　" @onTapped="onMenuItemTapped" />
       </div>
     </div>

@@ -1,11 +1,11 @@
 <template>
-  <div v-if="side === 'none'" v-on:click="onTapped">
+  <div v-if="side === 'none'" v-on:click.stop="onTapped" class="cursor-pointer">
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
       <circle v-if="grid.tapped" cx="64" cy="64" r="54.0" fill="none" stroke="white" stroke-width="4" />
       <circle v-if="grid.tapped" cx="64" cy="64" r="60.0" fill="none" stroke="black" stroke-width="6" stroke-dasharray="15,5" />
     </svg>
   </div>
-  <div v-if="side === 'red'" v-on:click="onTapped">
+  <div v-if="side === 'red'" v-on:click.stop="onTapped" class="cursor-pointer">
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
       <circle cx="64" cy="64" r="64.0" fill="white" />
       <circle cx="64" cy="64" r="54.0" fill="none" stroke="black" stroke-width="4" />
@@ -15,7 +15,7 @@
       <circle v-if="grid.tapped" cx="64" cy="64" r="62.0" fill="none" stroke="black" stroke-width="6" stroke-dasharray="15,5" />
     </svg>
   </div>
-  <div v-else-if="side === 'black'" v-on:click="onTapped">
+  <div v-else-if="side === 'black'" v-on:click.stop="onTapped" class="cursor-pointer">
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
       <circle cx="64" cy="64" r="64.0" fill="white" />
       <circle cx="64" cy="64" r="56.0" fill="black" />
@@ -72,7 +72,7 @@ export default {
   methods: {
     onTapped() {
       this.$emit("onTapped", {
-        index: this.grid.index, 
+        index: this.grid.index,
       });
     }
   },
