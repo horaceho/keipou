@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1">
     <div v-for="item in items" :key="item.index">
-      <div class="w-8">
+      <div>
         <Menu :item="item" @onTapped="onMenuItemTapped" />
       </div>
     </div>
