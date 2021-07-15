@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click.stop="onTapped" class="w-8 md:w-16">
+  <div v-on:click.stop="onTapped" class="w-8 md:w-16 cursor-pointer" >
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
       <text x="26" y="90" font-size="78" font-weight="bold" fill="gray">
         {{ name }}
@@ -25,6 +25,7 @@ export default {
     onTapped() {
       this.$emit("onTapped", {
         index: this.item.index,
+        name: this.item.name,
       });
     }
   },

@@ -34,7 +34,7 @@
         </div>
       </div>
       <div v-else class="min-h-full">
-        <Menus names="　" @onTapped="onMenuItemTapped" />
+        <Menus :names="items" @onTapped="onMenuItemTapped" />
       </div>
     </div>
   </div>
@@ -103,6 +103,10 @@ export default {
           if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0].index].code) > -1) {
             this.grids[event.index].code = this.taps[0].code;
             this.grids[this.taps[0].index].code = "1";
+            this.moves.push({
+              from: this.taps[0].index,
+              to: event.index,
+            });
           }
           this.clearTaps();
         } else {
@@ -133,6 +137,7 @@ export default {
       } else {
         this.taps.push(event);
       }
+      this.refreshMenus();
     },
     onPieceTapped(event) {
       if (this.grids[event.index].tapped) {
@@ -148,11 +153,7 @@ export default {
       }
     },
     onBoxTapped() {
-      if (this.mode !== "edit") {
-        this.mode = "edit";
-      } else {
-        this.mode = "play";
-      }
+      this.toggleMenus();
     },
     onHeadBoxTapped(event) {
       if (this.headBox[event.index].code !== "1") {
@@ -201,10 +202,12 @@ export default {
       }
     },
     onMenuItemTapped(event) {
-      if (this.mode !== "edit") {
-        this.mode = "edit";
+      if (event.name === "↺") {
+        if (this.moves.length > 0) this.moves.pop();
+        this.refreshMoves();
+        this.refreshMenus();
       } else {
-        this.mode = "play";
+        this.toggleMenus();
       }
     },
     clearTaps() {
@@ -218,6 +221,27 @@ export default {
         grid.tapped = false;
       });
       this.taps = [];
+    },
+    toggleMenus() {
+      if (this.mode !== "edit") {
+        this.mode = "edit";
+      } else {
+        this.mode = "play";
+      }
+    },
+    refreshMenus() {
+      if (this.moves.length > 0) {
+        this.items = "↺";
+      } else {
+        this.items = "　";
+      }
+    },
+    refreshMoves() {
+      this.grids = this.fenToGrids(this.fen);
+      for (let move of this.moves) {
+        this.grids[move.to].code = this.grids[move.from].code;
+        this.grids[move.from].code = "1";
+      }
     },
     fenToGrids(fen) {
       let parts = fen.split(" ");
@@ -283,7 +307,8 @@ export default {
       tailBox: [],
       mode: "idle", // play, edit
       turn: "red",
-      move: 0,
+      moves: [],
+      items: "　",
       taps: [],
     };
   },
