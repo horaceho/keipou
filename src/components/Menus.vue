@@ -15,11 +15,14 @@ export default {
   components: {
     Menu,
   },
+  computed: {
+    items() {
+      return this.strToMenus(this.names);
+    },
+  },
   methods: {
-    onMenuItemTapped(index) {
-      this.$emit("onTapped", {
-        index: index,
-      });
+    onMenuItemTapped(event) {
+      this.$emit("onTapped", event);
     },
     strToMenus(str) {
       let items = [];
@@ -41,11 +44,9 @@ export default {
   },
   data() {
     return {
-      items: [],
     };
   },
   mounted() {
-    this.items = this.strToMenus(this.names);
   },
 };
 </script>
