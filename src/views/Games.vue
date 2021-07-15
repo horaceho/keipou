@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto m-5 gap-4">
+  <div class="grid 2xl:grid-cols-2 mx-auto m-5 gap-4">
     <Board fen="rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR r - - 0 1" />
     <Board fen="9/9/9/9/9/9/9/9/9/9 r - - 0 1" />
     <Board fen="rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/9/1C5C1/9/RN2K2NR r - - 0 1" />
