@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mt-2">
+  <div class="flex mt-2 bg-pink-50">
     <div class="flex-auto m-2" v-on:click="onBoxTapped">
       <div v-if="mode === 'edit'">
         <div class="grid grid-cols-1 place-items-end">
@@ -38,63 +38,23 @@
       </div>
     </div>
   </div>
-  <div v-if="false && mode === 'play'">
-    <Float :icons="playIcons" @onTapped="onFloatTapped" />
-  </div>
-  <div v-if="false && mode === 'edit'">
-    <Float :icons="editIcons" @onTapped="onFloatTapped" />
+  <div class="">
+    <Moves :moves="moves" :index="index" @onTapped="onMoveTapped" />
   </div>
 </template>
 
 <script>
 import Menus from '../components/Menus.vue';
 import Piece from "../components/Piece.vue";
-import Float from '../components/Float.vue'
-
-const Icons = {
-  play: [
-    {
-      name: "✎",
-      code: "edit",
-    },
-    {
-      name: "◁",
-      code: "back",
-    },
-    {
-      name: "▶",
-      code: "next",
-    },
-    {
-      name: "⌂",
-      code: "home",
-    },
-  ],
-  edit: [
-    {
-      name: "✓",
-      code: "play",
-    },
-    {
-      name: "⌂",
-      code: "home",
-    },
-  ],
-};
+import Moves from "../components/Moves.vue";
 
 export default {
   components: {
     Menus,
     Piece,
-    Float,
+    Moves,
   },
   computed: {
-    playIcons() {
-      return Icons['play'];
-    },
-    editIcons() {
-      return Icons['edit'];
-    },
   },
   methods: {
     pushTap(event) {
@@ -155,6 +115,9 @@ export default {
     onBoxTapped() {
       this.toggleMenus();
     },
+    onMoveTapped(event) {
+      console.log("onMoveTapped", event);
+    },
     onHeadBoxTapped(event) {
       if (this.headBox[event.index].code !== "1") {
         if (this.headBox[event.index].tapped) {
@@ -183,22 +146,6 @@ export default {
             code: this.tailBox[event.index].code,
           });
         }
-      }
-    },
-    onFloatTapped(event) {
-      switch (event.icon.code) {
-        case "edit":
-          this.mode = "edit";
-          break;
-        case "play":
-          this.mode = "play";
-          break;
-        case "back":
-          break;
-        case "next":
-          break;
-        case "home":
-          break;
       }
     },
     onMenuItemTapped(event) {
@@ -308,6 +255,7 @@ export default {
       mode: "idle", // play, edit
       turn: "red",
       moves: [],
+      index: 0,
       items: "　",
       taps: [],
     };
