@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-wrap justify-center m-2 bg-pink-50">
-    <div class="p-4 cursor-pointer bg-blue-50" v-on:click.stop="onTappedPrev">
+  <div class="flex flex-wrap justify-center">
+    <div class="hidden cursor-pointer" v-on:click.stop="onTapped('prev')">
       ◁
     </div>
-    <div class="p-4 cursor-pointer">
+    <div class="w-48 text-center cursor-pointer text-black-700" v-on:click.stop="onTapped('name')">
       {{ name }}
     </div>
-    <div class="p-4 cursor-pointer bg-blue-50" v-on:click.stop="onTappedNext">
+    <div class="hidden cursor-pointer" v-on:click.stop="onTapped('next')">
       ▷
     </div>
   </div>
@@ -23,44 +23,24 @@ export default {
   ],
   computed: {
     name() {
-      return this.moves.length > 0 ? this.moves[this.at].from + "・" + this.moves[this.at].to : "・";
+      return (this.moves.length > 0) ? this.moves[this.index].name : "　";
     },
     count() {
       return this.moves.length;
     },
   },
   methods: {
-    onTapped() {
+    onTapped(part) {
       this.$emit("onTapped", {
-        index: this.at,
+        part: part,
       });
-    },
-    onTappedPrev() {
-      console.log("onTappedPrev", this.at, this.moves);
-      if (this.at > 0) {
-        this.at -= 1;
-        this.$emit("onTapped", {
-          index: this.at,
-        });
-      }
-    },
-    onTappedNext() {
-      console.log("onTappedNext", this.at, this.moves);
-      if (this.at + 1 < this.moves.length) {
-        this.at += 1;
-        this.$emit("onTapped", {
-          index: this.at,
-        });
-      }
     },
   },
   data() {
     return {
-      at: 0,
     }
   },
   mounted() {
-    this.at = this.index;
   },
   unmounted() {
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mt-2 bg-pink-50">
+  <div class="flex mt-2">
     <div class="flex-auto m-2" v-on:click="onBoxTapped">
       <div v-if="mode === 'edit'">
         <div class="grid grid-cols-1 place-items-end">
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div v-else class="min-h-full">
-        <Menus names="⋯" @onTapped="onMenuItemTapped" class="place-items-end" />
+        <Menus names="　" @onTapped="onMenuItemTapped" class="place-items-end" />
       </div>
     </div>
     <div>
@@ -38,13 +38,14 @@
       </div>
     </div>
   </div>
-  <div class="">
+  <div>
     <Moves :moves="moves" :index="index" @onTapped="onMoveTapped" />
   </div>
 </template>
 
 <script>
-import Menus from '../components/Menus.vue';
+import Board from "../board.js";
+import Menus from "../components/Menus.vue";
 import Piece from "../components/Piece.vue";
 import Moves from "../components/Moves.vue";
 
@@ -61,12 +62,14 @@ export default {
       if (this.taps.length > 0) {
         if (event.type === "grid" && event.type === this.taps[0].type) {
           if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0].index].code) > -1) {
-            this.grids[event.index].code = this.taps[0].code;
-            this.grids[this.taps[0].index].code = "1";
             this.moves.push({
+              name: this.moveToName(this.grids, this.taps[0].index, event.index),
               from: this.taps[0].index,
               to: event.index,
             });
+            this.index = this.moves.length - 1;
+            this.grids[event.index].code = this.taps[0].code;
+            this.grids[this.taps[0].index].code = "1";
           }
           this.clearTaps();
         } else {
@@ -116,7 +119,7 @@ export default {
       this.toggleMenus();
     },
     onMoveTapped(event) {
-      console.log("onMoveTapped", event);
+      console.log("onMoveTapped");
     },
     onHeadBoxTapped(event) {
       if (this.headBox[event.index].code !== "1") {
@@ -151,6 +154,7 @@ export default {
     onMenuItemTapped(event) {
       if (event.name === "↺") {
         if (this.moves.length > 0) this.moves.pop();
+        this.index = this.moves.length - 1;
         this.refreshMoves();
         this.refreshMenus();
       } else {
@@ -178,9 +182,9 @@ export default {
     },
     refreshMenus() {
       if (this.moves.length > 0) {
-        this.items = "↺";
+        this.items = "⋯↺";
       } else {
-        this.items = "　";
+        this.items = "⋯";
       }
     },
     refreshMoves() {
@@ -189,6 +193,12 @@ export default {
         this.grids[move.to].code = this.grids[move.from].code;
         this.grids[move.from].code = "1";
       }
+    },
+    moveToName(grids, from, to)
+    {
+      let codes = grids.map(grid => grid.code).join("");
+      let move = Board.move(codes, from, to);
+      return move;
     },
     fenToGrids(fen) {
       let parts = fen.split(" ");
@@ -219,6 +229,18 @@ export default {
         }
       }
       return grids;
+    },
+    ascii() {
+      let ascii = "";
+      let count = 0;
+      for (let grid of this.grids) {
+        ascii += grid.code;
+        count += 1;
+        if ((count % 9) === 0) {
+          ascii += "\n";
+        }
+      }
+      return ascii;
     },
     strToBox(str) {
       let grids = [];
@@ -256,7 +278,7 @@ export default {
       turn: "red",
       moves: [],
       index: 0,
-      items: "　",
+      items: "⋯",
       taps: [],
     };
   },
