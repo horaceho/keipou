@@ -11,7 +11,7 @@
         </div>
       </div>
       <div v-else class="min-h-full">
-        <Menus names="⋯" @onTapped="onMenuItemTapped" class="place-items-end" />
+        <Menus names="　" @onTapped="onMenuItemTapped" class="place-items-end" />
       </div>
     </div>
     <div>
@@ -38,75 +38,38 @@
       </div>
     </div>
   </div>
-  <div v-if="false && mode === 'play'">
-    <Float :icons="playIcons" @onTapped="onFloatTapped" />
-  </div>
-  <div v-if="false && mode === 'edit'">
-    <Float :icons="editIcons" @onTapped="onFloatTapped" />
+  <div>
+    <Moves :moves="moves" :index="index" @onTapped="onMoveTapped" />
   </div>
 </template>
 
 <script>
-import Menus from '../components/Menus.vue';
+import Board from "../board.js";
+import Menus from "../components/Menus.vue";
 import Piece from "../components/Piece.vue";
-import Float from '../components/Float.vue'
-
-const Icons = {
-  play: [
-    {
-      name: "✎",
-      code: "edit",
-    },
-    {
-      name: "◁",
-      code: "back",
-    },
-    {
-      name: "▶",
-      code: "next",
-    },
-    {
-      name: "⌂",
-      code: "home",
-    },
-  ],
-  edit: [
-    {
-      name: "✓",
-      code: "play",
-    },
-    {
-      name: "⌂",
-      code: "home",
-    },
-  ],
-};
+import Moves from "../components/Moves.vue";
 
 export default {
   components: {
     Menus,
     Piece,
-    Float,
+    Moves,
   },
   computed: {
-    playIcons() {
-      return Icons['play'];
-    },
-    editIcons() {
-      return Icons['edit'];
-    },
   },
   methods: {
     pushTap(event) {
       if (this.taps.length > 0) {
         if (event.type === "grid" && event.type === this.taps[0].type) {
           if ("rnhbeakcpRNHBEAKCP".indexOf(this.grids[this.taps[0].index].code) > -1) {
-            this.grids[event.index].code = this.taps[0].code;
-            this.grids[this.taps[0].index].code = "1";
             this.moves.push({
+              name: this.moveToName(this.grids, this.taps[0].index, event.index),
               from: this.taps[0].index,
               to: event.index,
             });
+            this.index = this.moves.length - 1;
+            this.grids[event.index].code = this.taps[0].code;
+            this.grids[this.taps[0].index].code = "1";
           }
           this.clearTaps();
         } else {
@@ -155,6 +118,9 @@ export default {
     onBoxTapped() {
       this.toggleMenus();
     },
+    onMoveTapped(event) {
+      console.log("onMoveTapped");
+    },
     onHeadBoxTapped(event) {
       if (this.headBox[event.index].code !== "1") {
         if (this.headBox[event.index].tapped) {
@@ -185,25 +151,10 @@ export default {
         }
       }
     },
-    onFloatTapped(event) {
-      switch (event.icon.code) {
-        case "edit":
-          this.mode = "edit";
-          break;
-        case "play":
-          this.mode = "play";
-          break;
-        case "back":
-          break;
-        case "next":
-          break;
-        case "home":
-          break;
-      }
-    },
     onMenuItemTapped(event) {
       if (event.name === "↺") {
         if (this.moves.length > 0) this.moves.pop();
+        this.index = this.moves.length - 1;
         this.refreshMoves();
         this.refreshMenus();
       } else {
@@ -231,9 +182,9 @@ export default {
     },
     refreshMenus() {
       if (this.moves.length > 0) {
-        this.items = "↺";
+        this.items = "⋯↺";
       } else {
-        this.items = "　";
+        this.items = "⋯";
       }
     },
     refreshMoves() {
@@ -242,6 +193,12 @@ export default {
         this.grids[move.to].code = this.grids[move.from].code;
         this.grids[move.from].code = "1";
       }
+    },
+    moveToName(grids, from, to)
+    {
+      let codes = grids.map(grid => grid.code).join("");
+      let move = Board.move(codes, from, to);
+      return move;
     },
     fenToGrids(fen) {
       let parts = fen.split(" ");
@@ -272,6 +229,18 @@ export default {
         }
       }
       return grids;
+    },
+    ascii() {
+      let ascii = "";
+      let count = 0;
+      for (let grid of this.grids) {
+        ascii += grid.code;
+        count += 1;
+        if ((count % 9) === 0) {
+          ascii += "\n";
+        }
+      }
+      return ascii;
     },
     strToBox(str) {
       let grids = [];
@@ -308,7 +277,8 @@ export default {
       mode: "idle", // play, edit
       turn: "red",
       moves: [],
-      items: "　",
+      index: 0,
+      items: "⋯",
       taps: [],
     };
   },
