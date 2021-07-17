@@ -1,10 +1,8 @@
 <template>
-  <div v-on:click.stop="onTapped" class="w-8 md:w-16 cursor-pointer" >
-    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-      <text x="26" y="90" font-size="78" font-weight="bold" fill="gray">
-        {{ name }}
-      </text>
-    </svg>
+  <div class="cursor-pointer" v-on:click.stop="onTapped" >
+    <div class="w-8 h-12 md:w-16 md:h-16 pt-1 md:pt-3 text-center text-lg md:text-3xl text-gray-600 filter drop-shadow">
+      <div class="">{{ name }}</div>
+    </div>
   </div>
 </template>
 

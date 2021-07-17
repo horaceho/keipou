@@ -190,7 +190,7 @@ export default {
     },
     refreshMenus() {
       if (this.moves.length > 0) {
-        this.items = "⋯↺";
+        this.items = "⋯⑂↺";
       } else {
         this.items = "⋯";
       }
