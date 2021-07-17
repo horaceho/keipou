@@ -79,7 +79,7 @@ export default {
             found = count;
         }
     }
-    if (count === 1) {
+    if (count === 1 || "abeABE".indexOf(code) > -1) {
         move += name;
         move += Cols[side][fromCol];
     } else if (count === 2) {
@@ -110,7 +110,11 @@ export default {
             move += (side === "R") ? "進" : "退";
         }
         let diff = (Math.abs(toRow - fromRow) - 1);
-        move += Diff[side][diff];
+        if ("abenhABENH".indexOf(code) > -1) {
+          move += Cols[side][toCol];
+        } else {
+          move += Diff[side][diff];
+        }
     }
 
     return move;

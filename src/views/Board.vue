@@ -117,6 +117,7 @@ export default {
     },
     onBoxTapped() {
       this.toggleMenus();
+      this.clearTaps();
     },
     onMoveTapped(event) {
       console.log("onMoveTapped");
@@ -159,6 +160,7 @@ export default {
         this.refreshMenus();
       } else {
         this.toggleMenus();
+        this.clearTaps();
       }
     },
     clearTaps() {
