@@ -3,7 +3,7 @@
     <div class="hidden cursor-pointer" v-on:click.stop="onTapped('prev')">
       ◁
     </div>
-    <div class="w-48 text-center cursor-pointer text-black-700" v-on:click.stop="onTapped('name')">
+    <div class="w-48 text-lg md:text-3xl text-center cursor-pointer text-black-700" v-on:click.stop="onTapped('name')">
       {{ name }}
     </div>
     <div class="hidden cursor-pointer" v-on:click.stop="onTapped('next')">

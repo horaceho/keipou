@@ -1,6 +1,6 @@
 <template>
-  <div class="flex mt-2">
-    <div class="flex-auto m-2" v-on:click="onBoxTapped">
+  <div class="flex">
+    <div class="flex-auto m-2 mt-8 md:mt-16" v-on:click="onBoxTapped">
       <div v-if="mode === 'edit'">
         <div class="grid grid-cols-1 place-items-end">
           <div v-for="grid in headBox" :key="grid.index">
@@ -14,16 +14,22 @@
         <Menus names="　" @onTapped="onMenuItemTapped" class="place-items-end" />
       </div>
     </div>
-    <div>
-      <div class="grid grid-cols-9 mx-auto m-2 bg-board bg-no-repeat">
+    <div class="m-0">
+      <div class="h-8 md:h-16 bg-notion-b bg-no-repeat">
+
+      </div>
+      <div class="grid grid-cols-9 mx-auto bg-board bg-no-repeat">
         <div v-for="grid in grids" :key="grid.index">
           <div class="w-8 md:w-16">
             <Piece :grid="grid" @onTapped="onPieceTapped" />
           </div>
         </div>
       </div>
+      <div class="h-8 md:h-16 bg-notion-r bg-no-repeat">
+
+      </div>
     </div>
-    <div class="flex-auto m-2" v-on:click="onBoxTapped">
+    <div class="flex-auto m-2 mt-8 md:mt-16" v-on:click="onBoxTapped">
       <div v-if="mode === 'edit'" class="pt-16 md:pt-32">
         <div class="grid grid-cols-1">
           <div v-for="grid in tailBox" :key="grid.index">
@@ -38,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div>
+  <div class="p-2 mb-4">
     <Moves :moves="moves" :index="index" @onTapped="onMoveTapped" />
   </div>
 </template>
