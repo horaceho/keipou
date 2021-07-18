@@ -34,6 +34,10 @@ const Diff = {
   B: "１２３４５６７８９",
 };
 
+const Chars = {
+  Space: "　",
+}
+
 export default {
   version: function () {
     return Version;

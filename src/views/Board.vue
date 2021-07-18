@@ -15,8 +15,9 @@
       </div>
     </div>
     <div class="m-0">
-      <div class="h-8 md:h-16 bg-notion-b bg-no-repeat">
-
+      <div class="h-8 md:h-16 text-gray-300">
+        <Cells v-if="shows.cells" names="１２３４５６７８９" @onTapped="onCellsTapped" />
+        <Cells v-else="shows.cells" names="　　　　・　　　　" @onTapped="onCellsTapped" />
       </div>
       <div class="grid grid-cols-9 mx-auto bg-board bg-no-repeat">
         <div v-for="grid in grids" :key="grid.index">
@@ -25,8 +26,9 @@
           </div>
         </div>
       </div>
-      <div class="h-8 md:h-16 bg-notion-r bg-no-repeat">
-
+      <div class="h-8 md:h-16 text-gray-300">
+        <Cells v-if="shows.cells" names="九八七六五四三二一" @onTapped="onCellsTapped" />
+        <Cells v-else="shows.cells" names="　　　　・　　　　" @onTapped="onCellsTapped" />
       </div>
     </div>
     <div class="flex-auto m-2 mt-8 md:mt-16" v-on:click="onBoxTapped">
@@ -51,12 +53,14 @@
 
 <script>
 import Board from "../board.js";
+import Cells from "../components/Cells.vue";
 import Menus from "../components/Menus.vue";
 import Piece from "../components/Piece.vue";
 import Moves from "../components/Moves.vue";
 
 export default {
   components: {
+    Cells,
     Menus,
     Piece,
     Moves,
@@ -169,6 +173,9 @@ export default {
         this.clearTaps();
       }
     },
+    onCellsTapped(event) {
+      this.shows.cells = this.shows.cells ? false : true;
+    },
     clearTaps() {
       this.grids.forEach(function(grid) {
         grid.tapped = false;
@@ -190,7 +197,7 @@ export default {
     },
     refreshMenus() {
       if (this.moves.length > 0) {
-        this.items = "⋯↺";
+        this.items = "⋯⑂↺";
       } else {
         this.items = "⋯";
       }
@@ -288,6 +295,10 @@ export default {
       index: 0,
       items: "⋯",
       taps: [],
+      shows: {
+        cells: true,
+        menus: true,
+      },
     };
   },
   mounted() {

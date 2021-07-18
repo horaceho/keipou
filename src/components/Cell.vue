@@ -1,6 +1,6 @@
 <template>
   <div class="cursor-pointer" v-on:click.stop="onTapped" >
-    <div class="w-8 h-12 md:w-16 md:h-16 pt-1 md:pt-3 text-center text-lg md:text-3xl text-gray-600 filter drop-shadow">
+    <div class="w-8 h-8 md:w-16 md:h-16 pt-1 md:pt-3 text-center text-lg md:text-3xl">
       <div class="">{{ name }}</div>
     </div>
   </div>
@@ -26,10 +26,6 @@ export default {
         name: this.item.name,
       });
     }
-  },
-  data() {
-    return {
-    };
   },
 };
 </script>
