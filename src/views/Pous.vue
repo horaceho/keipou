@@ -19,7 +19,7 @@
 
 <script>
 import { FolderIcon, DocumentIcon } from "@heroicons/vue/solid";
-const url = "https://api.github.com/repos/yaumati/keipou/contents/public/棋譜";
+const url = "https://api.github.com/repos/horaceho/keipou/contents/public/棋譜";
 
 export default {
   components: {
